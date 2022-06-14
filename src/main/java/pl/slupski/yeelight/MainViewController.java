@@ -5,9 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.text.Text;
-import lombok.Getter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,7 @@ import java.util.List;
 
 @Component
 @FxmlView("main-scene.fxml")
-public class MainViewController {
+public class MainViewController implements Observer {
 
     private Thread searchingThread;
     private List<Bulb> bulbs;
@@ -45,8 +43,6 @@ public class MainViewController {
     private Text bulbHue;
     @FXML
     private Text bulbSaturation;
-//    @FXML
-//    private Text bulbMethods;
 
     @FXML
     protected void initialize() {
@@ -66,9 +62,10 @@ public class MainViewController {
                 bulbRgb.setText(Integer.toString(selectedBulb.getRgb()));
                 bulbHue.setText(Integer.toString(selectedBulb.getHue()));
                 bulbSaturation.setText(Integer.toString(selectedBulb.getSaturation()));
-//                bulbMethods.setText(String.join(", ", selectedBulb.getSupportedMethods()));
             }
         });
+
+        BulbData.attach(this);
     }
 
     @FXML
@@ -80,6 +77,7 @@ public class MainViewController {
     @FXML
     public void loadBulbs() {
         bulbs = BulbData.findAll();
+        listView.getItems().clear();
         bulbs.forEach(bulb -> listView.getItems().add(bulb));
         listView.setCellFactory(param -> new ListCell<Bulb>() {
             @Override
@@ -92,5 +90,10 @@ public class MainViewController {
                 }
             }
         });
+    }
+
+    @Override
+    public void update() {
+        loadBulbs();
     }
 }
