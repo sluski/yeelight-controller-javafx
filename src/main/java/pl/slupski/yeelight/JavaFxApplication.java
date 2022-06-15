@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import pl.slupski.yeelight.view.MainViewController;
 
 public class JavaFxApplication extends Application {
 

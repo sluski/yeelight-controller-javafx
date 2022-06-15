@@ -11,7 +11,7 @@ public class BulbData {
     private static List<Observer> observers = new ArrayList<>();
     private static volatile Map<String, Bulb> bulbs = new Hashtable<>();
 
-    public static void add(Bulb bulb) {
+    public synchronized static void add(Bulb bulb) {
         System.out.println("Adding: " + bulb);
         if(!bulbs.containsKey(bulb.getId())) {
             bulbs.put(bulb.getId(), bulb);

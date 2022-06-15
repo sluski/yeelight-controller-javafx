@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pl.slupski.yeelight.view.component.InfoTabController" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+<content>
+    <VBox prefHeight="200.0" prefWidth="100.0">
+        <children>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                <children>
+                    <Label prefWidth="120.0" text="ID">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbId" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Name">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Location">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbLocation" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Cache-Control">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbCacheControl" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Firmware version">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbVersion" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Methods">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbMethods" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="On">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbOn" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Brightness">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbBrightness" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Color mode">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbColorMode" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Color temperature">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbColorTemperature" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="RGB">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbRgb" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Hue">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbHue" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                <children>
+                    <Label prefWidth="120.0" text="Saturation">
+                        <padding>
+                            <Insets left="10.0" />
+                        </padding>
+                    </Label>
+                    <Text fx:id="bulbSaturation" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" HBox.hgrow="ALWAYS">
+                        <HBox.margin>
+                            <Insets left="20.0" />
+                        </HBox.margin>
+                    </Text>
+                </children>
+            </HBox>
+        </children>
+    </VBox>
+</content>
+</ScrollPane>
