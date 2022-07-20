@@ -1,31 +1,35 @@
 package pl.slupski.yeelight;
 
-import lombok.AllArgsConstructor;
+import com.mollin.yapi.YeelightDevice;
+import com.mollin.yapi.exception.YeelightResultErrorException;
+import com.mollin.yapi.exception.YeelightSocketException;
 import lombok.Getter;
-import lombok.ToString;
+import pl.slupski.yeelight.util.ColorUtil;
 
-import java.io.Serializable;
-import java.util.List;
+public class Bulb {
 
-@Getter
-@AllArgsConstructor
-@ToString
-public class Bulb implements Serializable {
+    @Getter
+    private final BulbProps bulbProps;
+    private final YeelightDevice device;
 
-    private String cacheControl;
-    private String location;
-    private String id;
-    private String model;
-    private String firmwareVersion;
-    private List<String> supportedMethods;
-    private boolean on;
-    private int brightness;
-    private int colorMode;
-    private int colorTemperature;
-    private int rgb;
-    private int hue;
-    private int saturation;
-    private String name;
+
+    public Bulb(BulbProps bulbProps) throws YeelightSocketException {
+        this.bulbProps = bulbProps;
+        device = new YeelightDevice(bulbProps.getIp(), bulbProps.getPort());
+    }
+
+    public void setColorTemperature(int r, int g, int b) throws YeelightSocketException, YeelightResultErrorException {
+        Runnable runnable = () -> {
+            try {
+                device.setColorTemperature(ColorUtil.calcColor(r, g, b));
+            } catch (YeelightResultErrorException e) {
+                e.printStackTrace();
+            } catch (YeelightSocketException e) {
+                e.printStackTrace();
+            }
+        };
+        new Thread(runnable).start();
+    }
 
 
 }

@@ -56,6 +56,14 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11</version>
         </dependency>
+        <dependency>
+            <groupId>com.mollin</groupId>
+            <artifactId>yapi</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/lib/yapi-1.0-all.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 <!--    <plugins>-->

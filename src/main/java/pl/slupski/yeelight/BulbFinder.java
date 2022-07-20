@@ -9,14 +9,13 @@ import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BulbFinder extends Thread {
 
     private static final String MULTICAST_GROUP_ADDRESS = "239.255.255.250";
     private static final int MULTICAST_GROUP_PORT = 1982;
     private static final int SOCKET_PORT = 65074;
-    private static final int serverTimeout = 15000; // in milliseconds
+    private static final int SERVER_TIMEOUT = 10000; // in milliseconds
     private static final String MULTICAST_SEARCH_BULB_MSG = "M-SEARCH * HTTP/1.1\r\n" +
             "HOST:239.255.255.250:1982\r\n" +
             "ST:wifi_bulb\r\n" +
@@ -25,11 +24,6 @@ public class BulbFinder extends Thread {
             "\r\n";
 
     private DatagramSocket socket;
-    private volatile AtomicBoolean running;
-
-    public BulbFinder() {
-        this.running = new AtomicBoolean(true);
-    }
 
     @SneakyThrows
     @Override
@@ -49,7 +43,7 @@ public class BulbFinder extends Thread {
 
     private void listenForResponse() throws IOException {
         try {
-            socket.setSoTimeout(serverTimeout);
+            socket.setSoTimeout(SERVER_TIMEOUT);
             while (true) {
                 byte[] buffer = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
@@ -58,11 +52,12 @@ public class BulbFinder extends Thread {
                 BulbData.add(convertToBulb(data));
             }
         } catch (SocketTimeoutException ex) {
+            socket.close();
             System.out.println("Server stopped");
         }
     }
 
-    private Bulb convertToBulb(String data) {
+    private BulbProps convertToBulb(String data) {
         String[] args = data.split("\n");
         String cacheControl = args[1].split(":")[1].trim();
         String location = (args[4].split(":")[2] + ":" + args[4].split(":")[3]).trim();
@@ -79,7 +74,7 @@ public class BulbFinder extends Thread {
         int hue = Integer.parseInt(args[15].split(":")[1].trim());
         int saturation = Integer.parseInt(args[16].split(":")[1].trim());
         String name = args[17].split(":")[1].trim();
-        return new Bulb(cacheControl, location, id, model, firmwareVersion, supportedMethods, on, brightness, colorMode, ct, rgb, hue, saturation, name);
+        return new BulbProps(cacheControl, location, id, model, firmwareVersion, supportedMethods, on, brightness, colorMode, ct, rgb, hue, saturation, name);
 
     }
 
