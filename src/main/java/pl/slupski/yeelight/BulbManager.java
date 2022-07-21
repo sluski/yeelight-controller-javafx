@@ -27,10 +27,10 @@ public class BulbManager {
         }
     }
 
-    public List<BulbProps> getBulbs() {
-        List<BulbProps> result = new ArrayList<>();
+    public List<Bulb> getBulbs() {
+        List<Bulb> result = new ArrayList<>();
         for(Map.Entry<String, Bulb> bulb : bulbs.entrySet()) {
-            result.add(bulb.getValue().getBulbProps());
+            result.add(bulb.getValue());
         }
         return result;
     }

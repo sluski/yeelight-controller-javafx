@@ -1,20 +1,21 @@
 package pl.slupski.yeelight.view;
 
+import com.mollin.yapi.exception.YeelightResultErrorException;
 import com.mollin.yapi.exception.YeelightSocketException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.controlsfx.control.ToggleSwitch;
 import org.springframework.stereotype.Component;
-import pl.slupski.yeelight.BulbProps;
-import pl.slupski.yeelight.BulbData;
-import pl.slupski.yeelight.BulbFinder;
-import pl.slupski.yeelight.BulbManager;
+import pl.slupski.yeelight.*;
 import pl.slupski.yeelight.interfaces.Observer;
 import pl.slupski.yeelight.view.component.InfoTabController;
 
-import java.util.List;
+import java.util.Calendar;
+
 
 @Component
 @RequiredArgsConstructor
@@ -28,13 +29,41 @@ public class MainViewController implements Observer<BulbProps> {
 
     @FXML
     private InfoTabController infoTabController;
+    @FXML
+    private ToggleSwitch powerSwitch;
+    @FXML
+    private Slider brightnessSlider;
 
     private BulbManager bulbManager;
+    private Bulb selectedBulb;
+    private long brightnessLastUpdate;
 
     @FXML
     protected void initialize() {
         bulbManager = new BulbManager();
-        listView.getSelectionModel().selectedItemProperty().addListener((observableValue, o, selectedItem) -> onBulbSelect((BulbProps) selectedItem));
+        listView.getSelectionModel().selectedItemProperty().addListener((observableValue, o, selectedItem) -> onBulbSelect((Bulb) selectedItem));
+        brightnessSlider.valueProperty().addListener((observableValue, aBoolean, t1) -> {
+            try {
+                if (Calendar.getInstance().getTimeInMillis() - brightnessLastUpdate > 50) {
+                    selectedBulb.setBrightness((int) brightnessSlider.getValue());
+                    brightnessLastUpdate = Calendar.getInstance().getTimeInMillis();
+                }
+            } catch (YeelightSocketException e) {
+                e.printStackTrace();
+            } catch (YeelightResultErrorException e) {
+                e.printStackTrace();
+            }
+        });
+
+        powerSwitch.selectedProperty().addListener(((observableValue, aBoolean, t1) -> {
+            try {
+                selectedBulb.setPower(powerSwitch.isSelected());
+            } catch (YeelightSocketException e) {
+                e.printStackTrace();
+            } catch (YeelightResultErrorException e) {
+                e.printStackTrace();
+            }
+        }));
         BulbData.attach(this);
     }
 
@@ -47,14 +76,14 @@ public class MainViewController implements Observer<BulbProps> {
     @FXML
     public void loadBulbs() throws YeelightSocketException {
         bulbManager.getBulbs().forEach(bulb -> listView.getItems().add(bulb));
-        listView.setCellFactory(param -> new ListCell<BulbProps>() {
+        listView.setCellFactory(param -> new ListCell<Bulb>() {
             @Override
-            protected void updateItem(BulbProps bulbProps, boolean empty) {
-                super.updateItem(bulbProps, empty);
-                if (empty || bulbProps == null || bulbProps.getName() == null) {
+            protected void updateItem(Bulb bulb, boolean empty) {
+                super.updateItem(bulb, empty);
+                if (empty || bulb == null || bulb.getBulbProps().getName() == null) {
                     setText(null);
                 } else {
-                    setText(bulbProps.getName().equals("") ? bulbProps.getId() : bulbProps.getName());
+                    setText(bulb.getBulbProps().getName().equals("") ? bulb.getBulbProps().getId() : bulb.getBulbProps().getName());
                 }
             }
         });
@@ -70,7 +99,10 @@ public class MainViewController implements Observer<BulbProps> {
         }
     }
 
-    private void onBulbSelect(BulbProps bulbProps) {
-        infoTabController.update(bulbProps);
+    private void onBulbSelect(Bulb bulb) {
+        selectedBulb = bulb;
+        powerSwitch.setSelected(bulb.getBulbProps().isOn());
+        brightnessSlider.setValue(bulb.getBulbProps().getBrightness());
+        infoTabController.update(bulb.getBulbProps());
     }
 }

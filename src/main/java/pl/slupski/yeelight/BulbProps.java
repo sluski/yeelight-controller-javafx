@@ -2,11 +2,13 @@ package pl.slupski.yeelight;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Setter
 @Getter
 @AllArgsConstructor
 @ToString

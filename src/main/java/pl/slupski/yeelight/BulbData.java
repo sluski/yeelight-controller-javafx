@@ -1,28 +1,24 @@
 package pl.slupski.yeelight;
 
+import com.mollin.yapi.exception.YeelightSocketException;
 import pl.slupski.yeelight.interfaces.Observer;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BulbData {
 
     private static List<Observer> observers = new ArrayList<>();
-    private static volatile Map<String, BulbProps> bulbs = new Hashtable<>();
+    private static volatile Map<String, Bulb> bulbs = new Hashtable<>();
 
-    public synchronized static void add(BulbProps bulbProps) {
+    public static void add(BulbProps bulbProps) throws YeelightSocketException {
         System.out.println("Adding: " + bulbProps);
         if(!bulbs.containsKey(bulbProps.getId())) {
-            bulbs.put(bulbProps.getId(), bulbProps);
+            bulbs.put(bulbProps.getId(), new Bulb(bulbProps));
             notifyObservers(bulbProps);
         }
-    }
-
-    public static List<BulbProps> findAll() {
-        return bulbs.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
     public static void attach(Observer observer) {

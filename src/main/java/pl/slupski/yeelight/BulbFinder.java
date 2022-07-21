@@ -1,5 +1,6 @@
 package pl.slupski.yeelight;
 
+import com.mollin.yapi.exception.YeelightSocketException;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class BulbFinder extends Thread {
         socket.send(packet);
     }
 
-    private void listenForResponse() throws IOException {
+    private void listenForResponse() throws IOException, YeelightSocketException {
         try {
             socket.setSoTimeout(SERVER_TIMEOUT);
             while (true) {
@@ -61,7 +62,7 @@ public class BulbFinder extends Thread {
         String[] args = data.split("\n");
         String cacheControl = args[1].split(":")[1].trim();
         String location = (args[4].split(":")[2] + ":" + args[4].split(":")[3]).trim();
-        location = location.substring(2, location.length());
+        location = location.substring(2);
         String id = args[6].split(":")[1].trim();
         String model = args[7].split(":")[1].trim();
         String firmwareVersion = args[8].split(":")[1].trim();
